@@ -1,5 +1,8 @@
 #include <iostream>
 #include <random>
+#include <queue>
+#include <future>
+
 #include "TrafficLight.h"
 
 /* Implementation of class "MessageQueue" */
@@ -56,3 +59,30 @@ void TrafficLight::cycleThroughPhases()
 }
 
 */
+
+void TrafficLight::cycleThroughPhases()
+{
+    std::random_device rd;
+    std::mt19937 engine(rd());
+    std::uniform_int_distribution<> distribution(4, 6);
+    int cycle_duration = distribution(engine);    
+    auto last_update = std::chrono::system_clock::now();
+
+    while (true) 
+    {
+        int time_elapsed = std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now() - last_update);
+        std::this_thread::sleep_for(std::chrono::milliseconds(1));
+
+        if (time_elapsed < cycle_duration)
+        {
+            continue;
+        }
+        if ( _currentPhase == red ) { _currentPhase == green; } 
+        if ( _currentPhase == green ) { _currentPhase == red; } 
+
+        TrafficLightPhase signal = _currentPhase;
+        auto thread = std::async(std::launch::async, &MessageQueue<TrafficLightPhase>::send, _msgQueue, std::move(signal));
+
+    }
+
+}
