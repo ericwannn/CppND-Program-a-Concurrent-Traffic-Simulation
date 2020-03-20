@@ -15,6 +15,7 @@ class Vehicle;
 // Also, the class should define an std::dequeue called _queue, which stores objects of type TrafficLightPhase. 
 // Also, there should be an std::condition_variable as well as an std::mutex as private members. 
 
+// Eric 3
 template <class T>
 class MessageQueue
 {
@@ -49,9 +50,9 @@ public:
     // getters / setters
 
     // typical behaviour methods
-    void waitForGreen() const;
+    void waitForGreen();
     void simulate() override;
-    TrafficLightPhase getCurrentPhase() const;
+    TrafficLightPhase getCurrentPhase();
 
 private:
     // typical behaviour methods
@@ -62,7 +63,7 @@ private:
     // and use it within the infinite loop to push each new TrafficLightPhase into it by calling 
     // send in conjunction with move semantics.
 
-    std::shared_ptr<MessageQueue<TrafficLightPhase>> _msgQueue;
+    MessageQueue<TrafficLightPhase> _msgQueue;
 
     std::condition_variable _condition;
     std::mutex _mutex;
