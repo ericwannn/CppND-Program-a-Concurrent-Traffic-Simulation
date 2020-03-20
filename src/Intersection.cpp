@@ -7,6 +7,7 @@
 #include "Street.h"
 #include "Intersection.h"
 #include "Vehicle.h"
+#include "TrafficLight.h"
 
 /* Implementation of class "WaitingVehicles" */
 
